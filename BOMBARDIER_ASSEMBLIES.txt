@@ -1,10 +1,10 @@
-﻿Bombardier Assemblies Guide
+Bombardier Assemblies Guide
 
 Intake
 - Motors: lift (NEO) and rollers (NEO). CAN IDs are in Constants.IntakeConstants.
 - Spark settings (Configs.Intake):
-  - Lift: brake mode, 40A current limit
-  - Rollers: coast mode, 40A current limit
+  - Lift: brake mode, 30A current limit
+  - Rollers: coast mode, 20A current limit
 - Encoders: the lift motor encoder is used for position/velocity.
   - Read position: IntakeSubsystem.getLiftPositionRotations()
   - Read velocity: IntakeSubsystem.getLiftVelocityRpm()
@@ -17,7 +17,7 @@ Intake
 Conveyor
 - Motors: single conveyor roller motor (NEO). CAN ID in Constants.ConveyorConstants.kMotorCanId.
 - Spark settings (Configs.Conveyor):
-  - Conveyor: coast mode, 40A current limit
+  - Conveyor: coast mode, 15A current limit
 - Encoders: built-in NEO encoder for RPM feedback (ConveyorSubsystem.getVelocityRpm()).
 - Change behavior:
   - Speed values: Constants.ConveyorConstants.kConveyorSpeed, kConveyorReverseSpeed
@@ -29,7 +29,7 @@ Feeder
   - Set Constants.FeederConstants.kUseConveyorMotor = true
   - FeederSubsystem will command the ConveyorSubsystem motor instead of its own
 - Spark settings (Configs.Feeder):
-  - Feeder: coast mode, 30A current limit
+  - Feeder: coast mode, 15A current limit
 - Encoders: if using its own motor, FeederSubsystem.getVelocityRpm() reads the NEO encoder.
 - Change behavior:
   - Speed values: Constants.FeederConstants.kFeederSpeed, kFeederReverseSpeed
@@ -38,8 +38,8 @@ Feeder
 Shooter
 - Motors: two NEOs (left + right). CAN IDs in Constants.ShooterConstants.
 - Spark settings (Configs.Shooter):
-  - Left: coast mode, 40A current limit
-  - Right: coast mode, 40A current limit
+  - Left: coast mode, 25A current limit
+  - Right: coast mode, 25A current limit
 - Encoders: both built-in NEO encoders are read for RPM.
   - ShooterSubsystem.getLeftRpm(), getRightRpm(), getAverageRpm()
 - Change behavior:

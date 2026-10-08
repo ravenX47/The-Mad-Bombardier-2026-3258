@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -57,7 +56,9 @@ public class RobotContainer {
    */
   public RobotContainer() {
     registerPathPlannerNamedCommands();
-    m_autoChooser = AutoBuilder.buildAutoChooser(AutoConstants.kDefaultAutoName);
+    m_autoChooser = AutoBuilder.isConfigured()
+        ? AutoBuilder.buildAutoChooser(AutoConstants.kDefaultAutoName)
+        : new SendableChooser<>();
     SmartDashboard.putData("Auto Chooser", m_autoChooser);
 
     // Configure the button bindings
@@ -89,6 +90,15 @@ public class RobotContainer {
   }
 
   private void registerPathPlannerNamedCommands() {
+    NamedCommands.registerCommand(
+        "IntakeDeploy",
+        new InstantCommand(
+            () -> m_intakeLiftTargetRotations = Constants.IntakeConstants.kLiftDeployedPositionRotations));
+    NamedCommands.registerCommand(
+        "IntakeRaise",
+        new InstantCommand(
+            () -> m_intakeLiftTargetRotations = Constants.IntakeConstants.kLiftRaisedPositionRotations));
+
     NamedCommands.registerCommand(
         "IntakeOn",
         new InstantCommand(
@@ -168,7 +178,7 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
+    new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));

@@ -185,3 +185,10 @@ compile_commands.json
 
 # Eclipse generated file for annotation processors
 .factorypath
+
+# Local credentials and environment overrides
+.env
+.env.*
+!.env.example
+*.pem
+*.key
